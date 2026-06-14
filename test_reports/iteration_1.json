@@ -1,0 +1,35 @@
+{
+  "summary": "End-to-end frontend verification of the new CBMMG homepage cards and the two new detail pages (cbmmg-soldado.html, cbmmg-tenente.html). All 7 acceptance criteria from the review request pass.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Minor inconsistency between spec and implementation: the review request mentions sessionStorage flag 'idecan_has_cadastro'='1' for the 'already cadastrado' flow, but /app/frontend/public/assets/login-modal.js (function hasCadastro) actually checks for sessionStorage.idecan_cadastro containing a JSON object with nome+cpf. With the real key the flow works correctly and redirects to /inscricao-passo2.html. Just confirm the cadastro flow in inscricao.html sets sessionStorage.idecan_cadastro accordingly (it does — verified, this is how quadro-geral and the other editais already work).",
+    "CSP on cbmmg pages blocks an unrelated Cloudflare beacon script (static.cloudflareinsights.com/beacon.min.js). It does NOT affect functionality (auth.js, login-modal.js, tracker.js all load with HTTP 200 and execute). If desired, the CSP script-src can be extended with https://static.cloudflareinsights.com, or the beacon reference can be stripped from the imported HTML to remove the console noise.",
+    "Multiple .bak backup files (idecan.html.bak, .bak2 ... .bak5, meus-concursos.html.bak) are still present in /app/frontend/public — recommend removing them from the production build."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped per request)", "frontend": "100%"},
+  "test_credentials": "Not needed for the candidate flow. Admin credentials are in /app/memory/test_credentials.md.",
+  "seed_data_creation": "Used sessionStorage.idecan_cadastro = {nome:'Joao Teste', cpf:'12345678909'} to simulate a registered candidate.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All Playwright assertions passed: home shows 2 cards + correct title and no old cards; clicking the soldado card opens /cbmmg-soldado.html (correct EDITAL Nº 10, R$ 4.562,30, 321 vagas, R$ 106,00) and tenente opens /cbmmg-tenente.html (EDITAL Nº 09, R$ 7.506,80, 21 vagas, R$ 230,00); document.title on every page equals the IDECAN title; the two btn-inscricao-online on each page open data-testid='login-modal' when not cadastrado; modal contains CPF, Senha, link-cadastro, link-recover, login-submit (text 'Avançar'); link-cadastro navigates to /inscricao.html?edital=cbmmg-soldado (or cbmmg-tenente) and sets sessionStorage.idecan_edital correctly; when sessionStorage.idecan_cadastro is set with nome+cpf, clicking the button redirects directly to /inscricao-passo2.html (default fall-through, as expected for these new editais).",
+  "test_results_detail": {
+    "home_title": "IDECAN – Instituto de Desenvolvimento Educacional, Cultural e Assistencial Nacional",
+    "section_title": "CONCURSO CORPO DE BOMBEIROS MILITAR DE MINAS GERAIS",
+    "cards_present": {"cbmmg-soldado-card": true, "cbmmg-tenente-card": true},
+    "old_cards_removed": {"quadro-geral": true, "guarda-municipal": true, "procuradoria": true, "agente-transito": true},
+    "soldado_page": {"title_ok": true, "edital_n10_text_present": true, "remuneracao_4562_30": true, "vagas_321": true, "inscricao_106": true, "btn_count": 2, "modal_opens_when_not_cadastrado": true, "link_cadastro_url": "/inscricao.html?edital=cbmmg-soldado", "idecan_edital_persisted": "cbmmg-soldado", "redirect_when_cadastrado": "/inscricao-passo2.html"},
+    "tenente_page": {"title_ok": true, "edital_n09_text_present": true, "remuneracao_7506_80": true, "vagas_21": true, "inscricao_230": true, "btn_count": 2, "modal_opens_when_not_cadastrado": true, "redirect_when_cadastrado": "/inscricao-passo2.html"},
+    "csp_check": {"auth_js": 200, "login_modal_js": 200, "tracker_js": 200, "blocked_third_party": "cloudflareinsights beacon (non-blocking)"}
+  }
+}
