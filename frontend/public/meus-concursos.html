@@ -329,7 +329,7 @@ body > center > #Rodape   { flex: 0 0 auto; }
         '<td style="padding:14px 8px;vertical-align:top">' +
           '<a href="#" style="font-weight:bold">' + escape(ins.concurso) + '</a>' +
           '<br><span class="txt2">Cargo: <b>' + escape(cargoLabel) + '</b></span>' +
-          '<br><span class="txt2">Localidade: ' + escape(ins.localidade || 'CAMPINA GRANDE/PB') + '</span>' +
+          '<br><span class="txt2">Localidade: ' + escape(ins.localidade || '-') + '</span>' +
           '<br><span class="txt2">Inscrição realizada em: ' + escape(fmtData(ins.dataInscricao)) + ' &nbsp;|&nbsp; Protocolo: <b>' + escape(ins.protocolo) + '</b></span>' +
         '</td>' +
         '<td align="right" style="vertical-align:middle;padding:14px 8px">' +
@@ -510,7 +510,7 @@ body > center > #Rodape   { flex: 0 0 auto; }
       '<b>CPF:</b><span>' + escape(data.cpf || '') + '</span>' +
       '<b>Concurso:</b><span>' + escape(ins.concurso) + '</span>' +
       '<b>Cargo:</b><span>' + escape(cargoLabel) + '</span>' +
-      '<b>Localidade:</b><span>' + escape(ins.localidade || 'CAMPINA GRANDE/PB') + '</span>' +
+      '<b>Localidade:</b><span>' + escape(ins.localidade || '-') + '</span>' +
       '<b>Protocolo:</b><span>' + escape(ins.protocolo) + '</span>';
     document.getElementById('modal-valor').textContent = taxa;
 
@@ -601,6 +601,12 @@ body > center > #Rodape   { flex: 0 0 auto; }
   });
 
   /* ====================== Comprovante de Inscrição (impressão) ====================== */
+  function ufFromSigla(sigla){
+    var map = {AC:'Acre',AL:'Alagoas',AP:'Amapá',AM:'Amazonas',BA:'Bahia',CE:'Ceará',DF:'Distrito Federal',ES:'Espírito Santo',GO:'Goiás',MA:'Maranhão',MT:'Mato Grosso',MS:'Mato Grosso do Sul',MG:'Minas Gerais',PA:'Pará',PB:'Paraíba',PR:'Paraná',PE:'Pernambuco',PI:'Piauí',RJ:'Rio de Janeiro',RN:'Rio Grande do Norte',RS:'Rio Grande do Sul',RO:'Rondônia',RR:'Roraima',SC:'Santa Catarina',SP:'São Paulo',SE:'Sergipe',TO:'Tocantins'};
+    var s = (sigla||'').trim().toUpperCase();
+    return map[s] ? map[s] + ' (' + s + ')' : s;
+  }
+
   async function abrirComprovante(idx){
     var ins = inscricoes[idx];
     if(!ins) return;
@@ -689,12 +695,12 @@ body > center > #Rodape   { flex: 0 0 auto; }
   '<div class="top">'+
     '<div>' + escape(dataEmissao) + '</div>'+
     '<div class="center">IDECAN — Instituto de Desenvolvimento Educacional</div>'+
-    '<div>Concurso ' + escape(ins.concurso ? ins.concurso.split(' - ').slice(1).join(' - ') : 'Campina Grande') + '</div>'+
+    '<div>Concurso ' + escape(ins.concurso ? ins.concurso.split(' - ').slice(1).join(' - ') : '') + '</div>'+
   '</div>'+
 
   '<div class="org">'+
-    '<b>PREFEITURA MUNICIPAL DE CAMPINA GRANDE - PB</b>'+
-    'SECRETARIA DE ADMINISTRAÇÃO · ' + escape(ins.concurso || '') +
+    '<b>' + escape(ins.entidade || 'CORPO DE BOMBEIROS MILITAR DE MINAS GERAIS') + '</b>'+
+    escape(ins.concurso || '') +
   '</div>'+
 
   '<h1>Comprovante de Inscrição</h1>'+
@@ -708,8 +714,8 @@ body > center > #Rodape   { flex: 0 0 auto; }
       '<div class="field"><b>Exame</b><span>Concurso Público</span></div>'+
       '<div class="field"><b>Cargo Pretendido</b><span>' + escape(cargoLabel) + '</span></div>'+
       '<div class="field"><b>Nível</b><span>' + escape(nivel) + '</span></div>'+
-      '<div class="field"><b>UF da Prova</b><span>Paraíba (PB)</span></div>'+
-      '<div class="field"><b>Município da Prova</b><span>Campina Grande</span></div>'+
+      '<div class="field"><b>UF da Prova</b><span>' + escape((ins.localidade||'').split('/')[1] ? ufFromSigla((ins.localidade||'').split('/')[1]) : 'Minas Gerais (MG)') + '</span></div>'+
+      '<div class="field"><b>Município da Prova</b><span>' + escape((ins.localidade||'').split('/')[0] || '-') + '</span></div>'+
       '<div class="field"><b>Valor da Inscrição</b><span style="color:#16a34a;font-size:13px;font-weight:800">' + escape(ins.taxa || '') + '</span></div>'+
       '<div class="field"><b>Data da Inscrição</b><span>' + escape(fmtData(ins.dataInscricao)) + '</span></div>'+
     '</div></div>'+

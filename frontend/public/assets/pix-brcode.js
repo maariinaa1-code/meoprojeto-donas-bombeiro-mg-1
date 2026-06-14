@@ -18,7 +18,7 @@
       CONFIG = {
         key: (d.key || '').trim(),
         nome: ((d.nome || 'IDECAN').toUpperCase()).slice(0, 25),
-        cidade: ((d.cidade || 'CAMPINA GRANDE').toUpperCase()).slice(0, 15),
+        cidade: ((d.cidade || 'BELO HORIZONTE').toUpperCase()).slice(0, 15),
       };
       return CONFIG;
     }).catch(function () { return CONFIG; });
@@ -60,7 +60,7 @@
     }
     var valor = parseFloat(opts.valor || 0).toFixed(2);
     var nome = ascii(CONFIG.nome) || 'IDECAN';
-    var cidade = ascii(CONFIG.cidade) || 'CAMPINA GRANDE';
+    var cidade = ascii(CONFIG.cidade) || 'BELO HORIZONTE';
     var txid = ascii(opts.txid || '***').slice(0, 25) || '***';
 
     // 26 Merchant Account Information (PIX)

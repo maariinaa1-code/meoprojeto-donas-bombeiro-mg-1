@@ -21,7 +21,7 @@
     return;
   }
 
-  var DATA = window.__cargosData || { localidade: 'CAMPINA GRANDE/PB', cargos: [] };
+  var DATA = window.__cargosData || { localidade: '-', cargos: [] };
 
   function fmtCPF(cpf) {
     var d = String(cpf || '').replace(/\D/g, '');
@@ -68,7 +68,7 @@
     lbl.innerHTML =
       'Concurso: ' + escape(window.__concursoLabel || '') + '<br>' +
       'Entidade: ' + escape(window.__concursoEntidade || '') + '<br>' +
-      'Localidade: ' + escape(DATA.localidade || 'CAMPINA GRANDE/PB');
+      'Localidade: ' + escape(DATA.localidade || '-');
   }
 
   /* ===== Popula o dropdown ===== */
@@ -106,7 +106,7 @@
     lbl.innerHTML =
       '<br><br>Por favor, confirme as informações abaixo.<br><br>' +
       '<b>Cargo:</b> ' + escape(cg.codigo) + ' - ' + escape(cg.titulo) + (cg.jornada ? ' - ' + escape(cg.jornada) : '') + '<br>' +
-      '<b>Localidade:</b> ' + escape(DATA.localidade || 'CAMPINA GRANDE/PB') + '<br>' +
+      '<b>Localidade:</b> ' + escape(DATA.localidade || '-') + '<br>' +
       (cg.secretaria ? '<b>Secretaria:</b> ' + escape(cg.secretaria) + '<br>' : '') +
       '<b>Remuneração:</b> ' + escape(cg.remuneracao || '-') + '<br>' +
       '<b>Vagas:</b> ' + (cg.vagas != null ? cg.vagas : '-') + '<br>' +
@@ -167,7 +167,7 @@
     var protocolo = 'IDC' + Math.floor(10000000 + Math.random()*89999999);
     var payload = {
       concurso:    window.__concursoLabel,
-      localidade:  DATA.localidade || 'CAMPINA GRANDE/PB',
+      localidade:  DATA.localidade || '-',
       cargoTexto:  cg.codigo + ' - ' + cg.titulo + (cg.jornada ? ' - ' + cg.jornada : ''),
       codigo:      cg.codigo,
       titulo:      cg.titulo,

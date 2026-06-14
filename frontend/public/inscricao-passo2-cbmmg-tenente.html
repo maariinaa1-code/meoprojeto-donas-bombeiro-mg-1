@@ -661,7 +661,8 @@ window.__cargosData = { localidade: "MINAS GERAIS", cargos: [{"codigo": "COD 288
         taxa:        TAXA,
         protocolo:   protocolo,
         dataInscricao: new Date().toISOString(),
-        edital:      window.__concursoEdital
+        edital:      window.__concursoEdital,
+        entidade:    window.__concursoEntidade
       };
       try {
         var arr = JSON.parse(sessionStorage.getItem('idecan_inscricoes') || '[]');

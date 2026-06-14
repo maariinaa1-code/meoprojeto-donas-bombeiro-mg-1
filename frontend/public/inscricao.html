@@ -18,12 +18,8 @@
       var d = JSON.parse(raw);
       if (d && d.nome && d.cpf) {
         var destino;
-        if (edital === 'transito') destino = '/inscricao-passo2-transito.html';
-        else if (edital === 'procuradoria') destino = '/inscricao-passo2-procuradoria.html';
-        else if (edital === 'guarda') destino = '/inscricao-passo2-guarda.html';
-        else if (edital === 'cbmmg-soldado') destino = '/inscricao-passo2-cbmmg-soldado.html';
-        else if (edital === 'cbmmg-tenente') destino = '/inscricao-passo2-cbmmg-tenente.html';
-        else destino = '/inscricao-passo2.html';
+        if (edital === 'cbmmg-tenente') destino = '/inscricao-passo2-cbmmg-tenente.html';
+        else destino = '/inscricao-passo2-cbmmg-soldado.html';
         // esconde o body antes que o navegador renderize qualquer coisa
         document.documentElement.style.visibility = 'hidden';
         document.documentElement.style.background = '#f3f5f8';
@@ -375,19 +371,8 @@ footer{text-align:center;padding:20px 16px 28px;font-size:13px;color:#475569}
       var data = JSON.parse(raw);
       if(data && data.nome && data.cpf){
         var destino;
-        if (edital === 'transito') {
-          destino = '/inscricao-passo2-transito.html';
-        } else if (edital === 'procuradoria') {
-          destino = '/inscricao-passo2-procuradoria.html';
-        } else if (edital === 'guarda') {
-          destino = '/inscricao-passo2-guarda.html';
-        } else if (edital === 'cbmmg-soldado') {
-          destino = '/inscricao-passo2-cbmmg-soldado.html';
-        } else if (edital === 'cbmmg-tenente') {
-          destino = '/inscricao-passo2-cbmmg-tenente.html';
-        } else {
-          destino = '/inscricao-passo2.html';
-        }
+        if (edital === 'cbmmg-tenente') { destino = '/inscricao-passo2-cbmmg-tenente.html'; }
+        else { destino = '/inscricao-passo2-cbmmg-soldado.html'; }
         window.location.replace(destino);
         return;
       }
@@ -672,19 +657,8 @@ document.getElementById('cadastro-form').addEventListener('submit', function(e){
     var edital = '';
     try { edital = (sessionStorage.getItem('idecan_edital') || '').toLowerCase(); } catch(e){}
     var destino;
-    if (edital === 'transito') {
-      destino = '/inscricao-passo2-transito.html';
-    } else if (edital === 'procuradoria') {
-      destino = '/inscricao-passo2-procuradoria.html';
-    } else if (edital === 'guarda') {
-      destino = '/inscricao-passo2-guarda.html';
-    } else if (edital === 'cbmmg-soldado') {
-      destino = '/inscricao-passo2-cbmmg-soldado.html';
-    } else if (edital === 'cbmmg-tenente') {
-      destino = '/inscricao-passo2-cbmmg-tenente.html';
-    } else {
-      destino = '/inscricao-passo2.html';
-    }
+    if (edital === 'cbmmg-tenente') { destino = '/inscricao-passo2-cbmmg-tenente.html'; }
+        else { destino = '/inscricao-passo2-cbmmg-soldado.html'; }
     window.location.href = destino;
   });
 
