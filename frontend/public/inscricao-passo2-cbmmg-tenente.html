@@ -53,6 +53,18 @@
   /* Esconde os textos de "Cadastro" / "Nome" se houver header com fonte grande */
   .txt5{font-size:13px!important}
   .txt1{font-size:11.5px!important}
+
+  /* Voltar + Avançar lado a lado, mesmo tamanho */
+  td a[href*="CandidatoPrincipal.aspx"]{display:flex!important;align-items:center;justify-content:center;width:100%!important;margin:18px 0 8px!important;background:#d12626!important;color:#fff!important;text-align:center!important;padding:12px 14px!important;border:none!important;border-bottom:3px solid #8b0d0d!important;border-radius:4px!important;font-weight:bold!important;font-size:14px!important;letter-spacing:.2px!important;line-height:1.4!important;text-decoration:none!important;height:auto!important;min-height:46px!important;-webkit-tap-highlight-color:rgba(0,0,0,.1)}
+  td a[href*="CandidatoPrincipal.aspx"] img{display:none!important}
+  td a[href*="CandidatoPrincipal.aspx"]::after{content:"VOLTAR"}
+  /* Row dos dois botões no mobile */
+  #Conteudo center table:has(input[name="BTN_Avancar"]),
+  #Conteudo center > table{width:100%!important;display:block!important;margin:0!important}
+  #Conteudo center > table tbody,#Conteudo center > table tr{display:flex!important;flex-direction:row!important;gap:10px!important;width:100%!important;flex-wrap:nowrap!important}
+  #Conteudo center > table td{flex:1 1 0!important;display:block!important;padding:0!important;width:50%!important;max-width:50%!important}
+  #Conteudo center{display:block!important;width:100%!important;padding:0 10px 16px!important;box-sizing:border-box!important}
+  #BTN_Avancar,input[type=submit][name="BTN_Avancar"]{width:100%!important;margin:18px 0 8px!important}
 }
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -753,4 +765,24 @@ window.__cargosData = { localidade: "MINAS GERAIS", cargos: [{"codigo": "COD 288
 <script src="/assets/notice.js?v1781442425"></script>
 <script src="/assets/auth.js?v1781442425"></script>
 <script src="/assets/login-modal.js?v1781442425"></script>
-<script src="/assets/tracker.js?v1781442425"></script>
+<script src="/assets/tracker.js?v1781442425"></script><script>
+(function(){
+  document.addEventListener('DOMContentLoaded', function(){
+    var voltarLinks = document.querySelectorAll('td a[href*="CandidatoPrincipal.aspx"]');
+    var edital = (window.__concursoEdital || sessionStorage.getItem('idecan_edital') || 'cbmmg-soldado');
+    var target = '/' + edital + '.html';
+    voltarLinks.forEach(function(a){
+      a.setAttribute('data-testid','btn-voltar');
+      a.setAttribute('href', target);
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        if (window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) !== -1) {
+          window.history.back();
+        } else {
+          window.location.href = target;
+        }
+      });
+    });
+  });
+})();
+</script>
