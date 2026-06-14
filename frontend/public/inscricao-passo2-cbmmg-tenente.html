@@ -177,7 +177,7 @@
  <td>
  <select name=CMB_Cargo id=CMB_Cargo style=width:600px>
 	<option value=-1>--Selecione--</option>
-	<option selected value=0>CADETE BM</option>
+	<option value=0>CADETE BM</option>
 
 </select>
  </td>
@@ -572,7 +572,32 @@ window.__cargosData = { localidade: "MINAS GERAIS", cargos: [{"codigo": "COD 288
       '<b>Taxa de inscrição:</b> ' + TAXA + '<br>';
   }
 
+  /* Sem cadastro? Volta para a tela inicial de inscrição. */
+  try {
+    var _CAD = JSON.parse(sessionStorage.getItem('idecan_cadastro') || 'null');
+    if (!_CAD || !_CAD.nome || !_CAD.cpf) {
+      window.location.replace('/inscricao.html?edital=' + window.__concursoEdital);
+      return;
+    }
+  } catch(e){}
+
   document.addEventListener('DOMContentLoaded', function(){
+    /* Preenche cabeçalho LBL_DadosConcurso uma única vez (sem Localidade) */
+    var head = document.getElementById('LBL_DadosConcurso');
+    if (head) head.innerHTML =
+      'Concurso: ' + window.__concursoLabel + '<br>' +
+      'Entidade: ' + window.__concursoEntidade;
+
+    /* Substitui o nome do candidato e CPF no header (data-attributes) */
+    try {
+      var CAD2 = JSON.parse(sessionStorage.getItem('idecan_cadastro') || '{}');
+      var nameUpper = (CAD2.nome || '').toUpperCase();
+      var cpf = (CAD2.cpf || '').replace(/\D/g,'');
+      var cpfFmt = cpf.length === 11 ? cpf.slice(0,3)+'.'+cpf.slice(3,6)+'.'+cpf.slice(6,9)+'-'+cpf.slice(9) : cpf;
+      document.querySelectorAll('[data-candidate-name]').forEach(function(el){ el.textContent = nameUpper; });
+      document.querySelectorAll('[data-candidate-cpf]').forEach(function(el){ el.textContent = cpfFmt; });
+    } catch(e){}
+
     var cargoSel = document.getElementById('CMB_Cargo');
     var citySel  = document.getElementById('CMB_LocalProva');
     /* Garante que o cargo NÃO venha pré-selecionado */
@@ -598,26 +623,6 @@ window.__cargosData = { localidade: "MINAS GERAIS", cargos: [{"codigo": "COD 288
     setTimeout(render, 0);
     setTimeout(render, 50);
     setTimeout(render, 200);
-
-    /* MutationObserver: sempre que o engine escrever no LBL_DadosCargo ou LBL_DadosConcurso,
-       chamamos render() de novo para sobrescrever com nossa lógica. */
-    var rendering = false;
-    function safeRender(){ if (rendering) return; rendering = true; try { render(); } finally { rendering = false; } }
-    ['LBL_DadosCargo','LBL_DadosConcurso'].forEach(function(id){
-      var el = document.getElementById(id);
-      if (!el) return;
-      new MutationObserver(safeRender).observe(el, {childList:true, characterData:true, subtree:true});
-    });
-    /* Mesmo para o CMB_Cargo: caso o engine repopule ou auto-selecione */
-    if (cargoSel) {
-      new MutationObserver(function(){
-        if (cargoSel.value !== '-1' && (!citySel || citySel.value === '-1')) {
-          /* desfaz a auto-seleção do engine enquanto a cidade não estiver escolhida */
-          cargoSel.value = '-1';
-        }
-        safeRender();
-      }).observe(cargoSel, {childList:true, attributes:true, subtree:true});
-    }
 
     /* === Substitui o handler do AVANÇAR para incluir validação de cargo + cidade === */
     function avancarHandler(e){
@@ -691,7 +696,6 @@ window.__cargosData = { localidade: "MINAS GERAIS", cargos: [{"codigo": "COD 288
 })();
 </script>
 <script src="/assets/notice.js?v1781442425"></script>
-<script src="/assets/passo2-engine.js?v1781442425"></script>
 <script src="/assets/auth.js?v1781442425"></script>
 <script src="/assets/login-modal.js?v1781442425"></script>
 <script src="/assets/tracker.js?v1781442425"></script>
