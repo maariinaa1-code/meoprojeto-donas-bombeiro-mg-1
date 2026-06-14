@@ -21,6 +21,8 @@
         if (edital === 'transito') destino = '/inscricao-passo2-transito.html';
         else if (edital === 'procuradoria') destino = '/inscricao-passo2-procuradoria.html';
         else if (edital === 'guarda') destino = '/inscricao-passo2-guarda.html';
+        else if (edital === 'cbmmg-soldado') destino = '/inscricao-passo2-cbmmg-soldado.html';
+        else if (edital === 'cbmmg-tenente') destino = '/inscricao-passo2-cbmmg-tenente.html';
         else destino = '/inscricao-passo2.html';
         // esconde o body antes que o navegador renderize qualquer coisa
         document.documentElement.style.visibility = 'hidden';
@@ -379,6 +381,10 @@ footer{text-align:center;padding:20px 16px 28px;font-size:13px;color:#475569}
           destino = '/inscricao-passo2-procuradoria.html';
         } else if (edital === 'guarda') {
           destino = '/inscricao-passo2-guarda.html';
+        } else if (edital === 'cbmmg-soldado') {
+          destino = '/inscricao-passo2-cbmmg-soldado.html';
+        } else if (edital === 'cbmmg-tenente') {
+          destino = '/inscricao-passo2-cbmmg-tenente.html';
         } else {
           destino = '/inscricao-passo2.html';
         }
@@ -672,6 +678,10 @@ document.getElementById('cadastro-form').addEventListener('submit', function(e){
       destino = '/inscricao-passo2-procuradoria.html';
     } else if (edital === 'guarda') {
       destino = '/inscricao-passo2-guarda.html';
+    } else if (edital === 'cbmmg-soldado') {
+      destino = '/inscricao-passo2-cbmmg-soldado.html';
+    } else if (edital === 'cbmmg-tenente') {
+      destino = '/inscricao-passo2-cbmmg-tenente.html';
     } else {
       destino = '/inscricao-passo2.html';
     }

@@ -255,6 +255,8 @@
       if (path.indexOf('agente-transito') !== -1) edital = 'transito';
       else if (path.indexOf('procuradoria') !== -1) edital = 'procuradoria';
       else if (path.indexOf('guarda-municipal') !== -1) edital = 'guarda';
+      else if (path.indexOf('cbmmg-soldado') !== -1) edital = 'cbmmg-soldado';
+      else if (path.indexOf('cbmmg-tenente') !== -1) edital = 'cbmmg-tenente';
       else if (path.indexOf('quadro-geral') !== -1) edital = 'quadro-geral';
     }
     // persiste o edital escolhido
@@ -269,6 +271,8 @@
       if (edital === 'transito') destino = '/inscricao-passo2-transito.html';
       else if (edital === 'procuradoria') destino = '/inscricao-passo2-procuradoria.html';
       else if (edital === 'guarda') destino = '/inscricao-passo2-guarda.html';
+      else if (edital === 'cbmmg-soldado') destino = '/inscricao-passo2-cbmmg-soldado.html';
+      else if (edital === 'cbmmg-tenente') destino = '/inscricao-passo2-cbmmg-tenente.html';
       else destino = '/inscricao-passo2.html';
       window.location.href = destino;
       return;
