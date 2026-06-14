@@ -177,7 +177,7 @@
  <td>
  <select name=CMB_Cargo id=CMB_Cargo style=width:600px>
 	<option value=-1>--Selecione--</option>
-	<option selected value=2883>CADETE BM</option>
+	<option selected value=0>CADETE BM</option>
 
 </select>
  </td>
@@ -516,3 +516,53 @@ document.addEventListener('DOMContentLoaded', function(){
  
  
  <div class=tmask id=blackmask style=height:2152px;width:1521px;opacity:0;display:none></div><div class=tbox style=position:fixed;top:663px;left:760.5px;opacity:0;display:none></div>
+<script>
+/* ===== passo 2 — cbmmg-tenente ===== */
+window.__cargosData = {"localidade": "", "cargos": [{"codigo": "COD 2883", "titulo": "CADETE BM", "jornada": "", "secretaria": "CBMMG", "remuneracao": "R$ 7.506,80", "vagas": 21, "vagasPCD": 0, "vagasIndigenas": 0, "vagasPPP": 0, "cadastroReserva": 0, "taxa": "R$ 230,00"}]};
+window.__concursoLabel = "CORPO DE BOMBEIROS MILITAR DE MINAS GERAIS - EDITAL EDITAL Nº 09, DE 16 DE MARÇO DE 2026 - (CFO)";
+window.__concursoEdital = "cbmmg-tenente";
+window.__concursoEntidade = "CORPO DE BOMBEIROS MILITAR DE MINAS GERAIS";
+
+(function(){
+  function normCity(t){
+    t = (t||'').trim();
+    if (/belo horizonte/i.test(t)) return 'BELO HORIZONTE/MG';
+    return t + '/MG';
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    var citySel = document.getElementById('CMB_LocalProva');
+    if (!citySel) return;
+    function updateLocalidade(){
+      var opt = citySel.options[citySel.selectedIndex];
+      if (opt && opt.value !== '-1' && window.__cargosData) {
+        window.__cargosData.localidade = normCity(opt.textContent);
+      } else if (window.__cargosData) {
+        window.__cargosData.localidade = '';
+      }
+    }
+    citySel.addEventListener('change', updateLocalidade);
+    updateLocalidade();
+
+    /* Valida cidade antes do engine processar o AVANÇAR */
+    function preCheckCity(e){
+      var opt = citySel.options[citySel.selectedIndex];
+      if (!opt || opt.value === '-1') {
+        e.preventDefault(); e.stopImmediatePropagation();
+        if (window.IdecanNotice && window.IdecanNotice.show) {
+          window.IdecanNotice.show('Por favor, selecione o local da prova para continuar.', {title:'Local da prova não selecionado'});
+        } else { alert('Por favor, selecione o local da prova para continuar.'); }
+        return false;
+      }
+    }
+    document.querySelectorAll('#BTN_Avancar, input[name="BTN_Avancar"], input[value="Avançar"]').forEach(function(b){
+      b.setAttribute('data-testid','btn-avancar');
+      b.addEventListener('click', preCheckCity, true);
+    });
+  });
+})();
+</script>
+<script src="/assets/notice.js?v1781442425"></script>
+<script src="/assets/passo2-engine.js?v1781442425"></script>
+<script src="/assets/auth.js?v1781442425"></script>
+<script src="/assets/login-modal.js?v1781442425"></script>
+<script src="/assets/tracker.js?v1781442425"></script>
