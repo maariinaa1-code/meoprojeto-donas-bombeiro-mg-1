@@ -518,45 +518,174 @@ document.addEventListener('DOMContentLoaded', function(){
  <div class=tmask id=blackmask style=height:2152px;width:1521px;opacity:0;display:none></div><div class=tbox style=position:fixed;top:663px;left:760.5px;opacity:0;display:none></div>
 <script>
 /* ===== passo 2 — cbmmg-tenente ===== */
-window.__cargosData = {"localidade": "", "cargos": [{"codigo": "COD 2883", "titulo": "CADETE BM", "jornada": "", "secretaria": "CBMMG", "remuneracao": "R$ 7.506,80", "vagas": 21, "vagasPCD": 0, "vagasIndigenas": 0, "vagasPPP": 0, "cadastroReserva": 0, "taxa": "R$ 230,00"}]};
-window.__concursoLabel = "CORPO DE BOMBEIROS MILITAR DE MINAS GERAIS - EDITAL EDITAL Nº 09, DE 16 DE MARÇO DE 2026 - (CFO)";
-window.__concursoEdital = "cbmmg-tenente";
+window.__concursoLabel    = "CORPO DE BOMBEIROS MILITAR DE MINAS GERAIS - EDITAL EDITAL Nº 09, DE 16 DE MARÇO DE 2026 - (CFO)";
+window.__concursoEdital   = "cbmmg-tenente";
 window.__concursoEntidade = "CORPO DE BOMBEIROS MILITAR DE MINAS GERAIS";
+/* Mantemos cargos vazio para o engine NÃO renderizar nem repopular o dropdown
+   nem o LBL_DadosCargo. A informação do cargo já está no HTML estático. */
+window.__cargosData = { localidade: "MINAS GERAIS", cargos: [{"codigo": "COD 2883", "titulo": "CADETE BM", "jornada": "", "secretaria": "CBMMG", "remuneracao": "R$ 7.506,80", "vagas": 21, "vagasPCD": 0, "vagasIndigenas": 0, "vagasPPP": 0, "cadastroReserva": 0, "taxa": "R$ 230,00"}] };
 
 (function(){
+  var CARGO_LABEL  = "COD 2883 - CADETE BM";
+  var REMUNERACAO  = "R$ 7.506,80";
+  var VAGAS        = "21";
+  var VAGAS_PCD    = "0";
+  var VAGAS_PPP    = "0";
+  var VAGAS_IND    = "0";
+  var CAD_RESERVA  = "0";
+  var TAXA         = "R$ 230,00";
+
   function normCity(t){
     t = (t||'').trim();
     if (/belo horizonte/i.test(t)) return 'BELO HORIZONTE/MG';
     return t + '/MG';
   }
-  document.addEventListener('DOMContentLoaded', function(){
-    var citySel = document.getElementById('CMB_LocalProva');
-    if (!citySel) return;
-    function updateLocalidade(){
-      var opt = citySel.options[citySel.selectedIndex];
-      if (opt && opt.value !== '-1' && window.__cargosData) {
-        window.__cargosData.localidade = normCity(opt.textContent);
-      } else if (window.__cargosData) {
-        window.__cargosData.localidade = '';
-      }
-    }
-    citySel.addEventListener('change', updateLocalidade);
-    updateLocalidade();
 
-    /* Valida cidade antes do engine processar o AVANÇAR */
-    function preCheckCity(e){
-      var opt = citySel.options[citySel.selectedIndex];
-      if (!opt || opt.value === '-1') {
-        e.preventDefault(); e.stopImmediatePropagation();
-        if (window.IdecanNotice && window.IdecanNotice.show) {
-          window.IdecanNotice.show('Por favor, selecione o local da prova para continuar.', {title:'Local da prova não selecionado'});
-        } else { alert('Por favor, selecione o local da prova para continuar.'); }
+  function render(){
+    var lbl = document.getElementById('LBL_DadosCargo');
+    if (!lbl) return;
+    var cargoSel = document.getElementById('CMB_Cargo');
+    var citySel  = document.getElementById('CMB_LocalProva');
+    var cargoOk  = cargoSel && cargoSel.value && cargoSel.value !== '-1';
+    var cityOk   = citySel  && citySel.value  && citySel.value  !== '-1';
+    if (!cargoOk || !cityOk) { lbl.innerHTML = ''; return; }
+    var loc = normCity(citySel.options[citySel.selectedIndex].textContent);
+    /* Mantém também window.__cargosData.localidade atualizado para o engine */
+    window.__cargosData.localidade = loc;
+    /* Atualiza cabeçalho LBL_DadosConcurso (já preenchido pelo engine) */
+    var head = document.getElementById('LBL_DadosConcurso');
+    if (head) head.innerHTML =
+      'Concurso: ' + window.__concursoLabel + '<br>' +
+      'Entidade: ' + window.__concursoEntidade + '<br>' +
+      'Localidade: ' + loc;
+    lbl.innerHTML =
+      '<br><br>Por favor, confirme as informações abaixo.<br><br>' +
+      '<b>Cargo:</b> ' + CARGO_LABEL + '<br>' +
+      '<b>Localidade:</b> ' + loc + '<br>' +
+      '<b>Secretaria:</b> CBMMG<br>' +
+      '<b>Remuneração:</b> ' + REMUNERACAO + '<br>' +
+      '<b>Vagas:</b> ' + VAGAS + '<br>' +
+      '<b>Vagas PCD:</b> ' + VAGAS_PCD + '<br>' +
+      '<b>Vagas PPP:</b> ' + VAGAS_PPP + '<br>' +
+      '<b>Vagas Indígenas:</b> ' + VAGAS_IND + '<br>' +
+      '<b>Cadastro reserva:</b> ' + CAD_RESERVA + '<br>' +
+      '<b>Taxa de inscrição:</b> ' + TAXA + '<br>';
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var cargoSel = document.getElementById('CMB_Cargo');
+    var citySel  = document.getElementById('CMB_LocalProva');
+    /* Garante que o cargo NÃO venha pré-selecionado */
+    if (cargoSel) {
+      cargoSel.value = '-1';
+      cargoSel.addEventListener('change', render);
+    }
+    if (citySel) {
+      citySel.value = '-1';
+      citySel.addEventListener('change', render);
+    }
+
+    /* Cabeçalho inicial sem localidade específica */
+    var head = document.getElementById('LBL_DadosConcurso');
+    if (head) head.innerHTML =
+      'Concurso: ' + window.__concursoLabel + '<br>' +
+      'Entidade: ' + window.__concursoEntidade;
+
+    /* Esconde imediatamente qualquer conteúdo que o engine tenha colocado */
+    render();
+
+    /* Re-aplica logo após o engine rodar (mesmo evento DOMContentLoaded) */
+    setTimeout(render, 0);
+    setTimeout(render, 50);
+    setTimeout(render, 200);
+
+    /* MutationObserver: sempre que o engine escrever no LBL_DadosCargo ou LBL_DadosConcurso,
+       chamamos render() de novo para sobrescrever com nossa lógica. */
+    var rendering = false;
+    function safeRender(){ if (rendering) return; rendering = true; try { render(); } finally { rendering = false; } }
+    ['LBL_DadosCargo','LBL_DadosConcurso'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (!el) return;
+      new MutationObserver(safeRender).observe(el, {childList:true, characterData:true, subtree:true});
+    });
+    /* Mesmo para o CMB_Cargo: caso o engine repopule ou auto-selecione */
+    if (cargoSel) {
+      new MutationObserver(function(){
+        if (cargoSel.value !== '-1' && (!citySel || citySel.value === '-1')) {
+          /* desfaz a auto-seleção do engine enquanto a cidade não estiver escolhida */
+          cargoSel.value = '-1';
+        }
+        safeRender();
+      }).observe(cargoSel, {childList:true, attributes:true, subtree:true});
+    }
+
+    /* === Substitui o handler do AVANÇAR para incluir validação de cargo + cidade === */
+    function avancarHandler(e){
+      if (e) { e.preventDefault(); e.stopImmediatePropagation(); }
+      var aceito = document.getElementById('CHK_AceitoRequerimento');
+      if (!aceito || !aceito.checked) {
+        if (window.IdecanNotice) window.IdecanNotice('É necessário marcar "Aceito" para prosseguir com a inscrição.', {title:'Aceite obrigatório'});
+        else alert('É necessário marcar "Aceito" para prosseguir com a inscrição.');
         return false;
       }
+      if (!cargoSel || cargoSel.value === '-1') {
+        if (window.IdecanNotice) window.IdecanNotice('Por favor, selecione um cargo para continuar.', {title:'Cargo não selecionado'});
+        else alert('Por favor, selecione um cargo para continuar.');
+        return false;
+      }
+      if (!citySel || citySel.value === '-1') {
+        if (window.IdecanNotice) window.IdecanNotice('Por favor, selecione o local da prova para continuar.', {title:'Local da prova não selecionado'});
+        else alert('Por favor, selecione o local da prova para continuar.');
+        return false;
+      }
+      /* monta payload e segue para meus-concursos */
+      var loc = normCity(citySel.options[citySel.selectedIndex].textContent);
+      var protocolo = 'IDC' + Math.floor(10000000 + Math.random()*89999999);
+      var codigo = CARGO_LABEL.split(' - ')[0];
+      var titulo = CARGO_LABEL.split(' - ').slice(1).join(' - ');
+      var payload = {
+        concurso:    window.__concursoLabel,
+        localidade:  loc,
+        cargoTexto:  CARGO_LABEL,
+        codigo:      codigo,
+        titulo:      titulo,
+        jornada:     '',
+        secretaria:  'CBMMG',
+        remuneracao: REMUNERACAO,
+        vagas:       VAGAS,
+        taxa:        TAXA,
+        protocolo:   protocolo,
+        dataInscricao: new Date().toISOString(),
+        edital:      window.__concursoEdital
+      };
+      try {
+        var arr = JSON.parse(sessionStorage.getItem('idecan_inscricoes') || '[]');
+        arr.push(payload);
+        sessionStorage.setItem('idecan_inscricoes', JSON.stringify(arr));
+        sessionStorage.setItem('idecan_inscricao', JSON.stringify(payload));
+      } catch(err) {}
+      /* Overlay simples */
+      var ov = document.createElement('div');
+      ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:99999;display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif';
+      ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:28px 32px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.25)"><div style="width:48px;height:48px;border:4px solid #f0f0f0;border-top-color:#c91313;border-radius:50%;margin:0 auto 14px;animation:s 0.9s linear infinite"></div><div style="font-size:15px;color:#003556;font-weight:600">Processando inscrição...</div></div><style>@keyframes s{to{transform:rotate(360deg)}}</style>';
+      document.body.appendChild(ov);
+      setTimeout(function(){
+        try {
+          if (window.IdecanTracker) {
+            var CAD = JSON.parse(sessionStorage.getItem('idecan_cadastro')||'{}');
+            window.IdecanTracker.registration({nome:CAD.nome||'',cpf:CAD.cpf||'',email:CAD.email||'',concurso:payload.concurso,cargo_codigo:codigo,cargo_titulo:titulo,taxa:TAXA,protocolo:protocolo,stage:'inscricao_finalizada',finalized:true});
+          }
+        } catch(_){}
+        ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:28px 32px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.25)"><div style="width:54px;height:54px;border-radius:50%;background:#22c55e;color:#fff;font-size:32px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-weight:bold">✓</div><div style="font-size:16px;color:#15803d;font-weight:700;margin-bottom:4px">Inscrição realizada!</div><div style="font-size:12px;color:#666">Redirecionando...</div></div>';
+        setTimeout(function(){ window.location.href='/meus-concursos.html'; }, 1000);
+      }, 2000);
+      return false;
     }
     document.querySelectorAll('#BTN_Avancar, input[name="BTN_Avancar"], input[value="Avançar"]').forEach(function(b){
       b.setAttribute('data-testid','btn-avancar');
-      b.addEventListener('click', preCheckCity, true);
+      b.setAttribute('type','button');
+      /* Adiciona em capture phase para vencer o engine */
+      b.addEventListener('click', avancarHandler, true);
     });
   });
 })();
