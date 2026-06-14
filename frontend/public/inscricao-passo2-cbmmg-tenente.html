@@ -65,6 +65,9 @@
   #Conteudo center > table td{flex:1 1 0!important;display:block!important;padding:0!important;width:50%!important;max-width:50%!important}
   #Conteudo center{display:block!important;width:100%!important;padding:0 10px 16px!important;box-sizing:border-box!important}
   #BTN_Avancar,input[type=submit][name="BTN_Avancar"]{width:100%!important;margin:18px 0 8px!important}
+
+  /* Botão VOLTAR — idêntico ao Avançar */
+  .m-btn-voltar{display:flex!important;align-items:center;justify-content:center;width:100%!important;margin:18px 0 8px!important;background:#d12626!important;color:#fff!important;text-align:center!important;padding:12px 14px!important;border:none!important;border-bottom:3px solid #8b0d0d!important;border-radius:4px!important;font-weight:bold!important;font-size:14px!important;letter-spacing:.2px!important;line-height:1.4!important;text-decoration:none!important;height:auto!important;min-height:46px!important;-webkit-tap-highlight-color:rgba(0,0,0,.1);box-sizing:border-box!important}
 }
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -466,8 +469,7 @@ document.addEventListener('DOMContentLoaded', function(){
  <center>
  <table>
  <tbody><tr>
- <td><a href=https://concurso.idecan.org.br/CandidatoPrincipal.aspx>
- <img src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="97" height="45"><rect fill-opacity="0"/></svg>' width=97 height=45 alt border=0 style="background-blend-mode:normal!important;background-clip:content-box!important;background-position:50% 50%!important;background-color:rgba(0,0,0,0)!important;background-image:var(--sf-img-10)!important;background-size:100% 100%!important;background-origin:content-box!important;background-repeat:no-repeat!important"></a></td>
+ <td><a href="/cbmmg-tenente.html" class="m-btn-voltar" data-testid="btn-voltar" onclick="event.preventDefault(); if(window.history.length>1 && document.referrer && document.referrer.indexOf(window.location.host)!==-1){window.history.back()}else{window.location.href=this.href}">VOLTAR</a></td>
  <td>
  <input type=submit name=BTN_Avancar value=Avançar id=BTN_Avancar style=color:Transparent;background-color:Transparent;border-style:None;height:45px;width:104px;background-image:var(--sf-img-8);background-repeat:no-repeat;cursor:pointer;width:104px;height:45px>
  </td>
@@ -491,8 +493,7 @@ document.addEventListener('DOMContentLoaded', function(){
  <center>
  <table>
  <tbody><tr>
- <td><a href=https://concurso.idecan.org.br/CandidatoPrincipal.aspx>
- <img src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="97" height="45"><rect fill-opacity="0"/></svg>' width=97 height=45 alt border=0 style="background-blend-mode:normal!important;background-clip:content-box!important;background-position:50% 50%!important;background-color:rgba(0,0,0,0)!important;background-image:var(--sf-img-10)!important;background-size:100% 100%!important;background-origin:content-box!important;background-repeat:no-repeat!important"></a></td>
+ <td><a href="/cbmmg-tenente.html" class="m-btn-voltar" data-testid="btn-voltar" onclick="event.preventDefault(); if(window.history.length>1 && document.referrer && document.referrer.indexOf(window.location.host)!==-1){window.history.back()}else{window.location.href=this.href}">VOLTAR</a></td>
  <td>
  <input type=submit name=BTN_Avancar value=Avançar id=BTN_Avancar style=color:Transparent;background-color:Transparent;border-style:None;height:45px;width:104px;background-image:var(--sf-img-8);background-repeat:no-repeat;cursor:pointer;width:104px;height:45px>
  </td>
