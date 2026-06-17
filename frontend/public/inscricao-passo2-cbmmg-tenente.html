@@ -38,12 +38,7 @@
   #CMB_Cargo,#CMB_LocalProva{width:100%!important;max-width:100%!important}
   /* Checkbox + label do "Aceito" */
   input[type=checkbox]{width:20px!important;height:20px!important;vertical-align:middle!important;margin-right:6px!important;display:inline-block!important}
-  /* Atendimento especial — empilha checkboxes */
-  #GRD_SolicitacaoAtendimentoEspecial,#GRD_SolicitacaoAtendimentoEspecial *{display:block!important;width:100%!important}
-  #GRD_SolicitacaoAtendimentoEspecial tr{padding:4px 0!important;border-bottom:1px solid #f0f0f0!important}
-  #GRD_SolicitacaoAtendimentoEspecial td{display:inline-block!important;width:auto!important;vertical-align:middle!important;font-size:13px!important}
-  #GRD_SolicitacaoAtendimentoEspecial input[type=checkbox]{margin-right:8px!important}
-  /* Botão AVANÇAR como botão vermelho idêntico ao de inscrição */
+/* Botão AVANÇAR como botão vermelho idêntico ao de inscrição */
   #BTN_Avancar,input[type=submit][name="BTN_Avancar"]{display:block!important;width:100%!important;max-width:none!important;margin:18px 0 8px!important;background:#d12626!important;background-image:none!important;color:#fff!important;text-align:center!important;padding:12px 14px!important;border:none!important;border-bottom:3px solid #8b0d0d!important;border-radius:4px!important;font-weight:bold!important;font-size:14px!important;letter-spacing:.2px!important;line-height:1.4!important;height:auto!important;cursor:pointer!important;-webkit-appearance:none!important;appearance:none!important;font-family:inherit!important}
   /* Blocos de info gerados pelo nosso script */
   #LBL_DadosCargo,#LBL_DadosConcurso{display:block!important;background:#f4f6fb!important;border-radius:6px!important;padding:10px 12px!important;margin:8px 0!important;font-size:12.5px!important;line-height:1.6!important;border-left:3px solid #c91313!important}
@@ -365,91 +360,7 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
  <div id=UpdatePanel_SolicitacaoAtendimentoEspecial>
  
- <br>
- <fieldset class=fieldset>
- <legend><span class=legend1><b>ATENDIMENTO ESPECIAL</b></span></legend>
  
- Caso necessite de atendimento especial, selecione abaixo.
- <br>
- Após a realização da inscrição, há a possibilidade de realizar upload de arquivos (respeitando os prazos), bem como verificar se a solicitação foi deferida ou não.
- <br>
- <br>
- <table cellspacing=0 cellpadding=3 id=GRD_SolicitacaoAtendimentoEspecial style=border-width:0px;border-collapse:collapse>
- <tbody><tr style=background-color:White>
- <td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl02$CHK_Gravar type=checkbox id=GRD_SolicitacaoAtendimentoEspecial_CHK_Gravar_0 value=1>
- <td> 1. Amamentação<td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl02$TXT_OBS type=text maxlength=250 size=50 id=GRD_SolicitacaoAtendimentoEspecial_TXT_OBS_0 placeholder=Descrição style=width:300px value>
- <td>
- <input type=file name=GRD_SolicitacaoAtendimentoEspecial$ctl02$AtendimentoEspecialFile id=GRD_SolicitacaoAtendimentoEspecial_AtendimentoEspecialFile_0 style=width:300px value>
- </td>
- <tr style=background-color:White>
- <td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl03$CHK_Gravar type=checkbox id=GRD_SolicitacaoAtendimentoEspecial_CHK_Gravar_1 value=2>
- <td> 2. Prova ampliada (Fonte 16)<td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl03$TXT_OBS type=text maxlength=250 size=50 id=GRD_SolicitacaoAtendimentoEspecial_TXT_OBS_1 placeholder=Descrição style=width:300px value>
- <td>
- <input type=file name=GRD_SolicitacaoAtendimentoEspecial$ctl03$AtendimentoEspecialFile id=GRD_SolicitacaoAtendimentoEspecial_AtendimentoEspecialFile_1 style=width:300px value>
- </td>
- <tr style=background-color:White>
- <td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl04$CHK_Gravar type=checkbox id=GRD_SolicitacaoAtendimentoEspecial_CHK_Gravar_2 value=3>
- <td> 3. Porte de arma<td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl04$TXT_OBS type=text maxlength=250 size=50 id=GRD_SolicitacaoAtendimentoEspecial_TXT_OBS_2 placeholder=Descrição style=width:300px value>
- <td>
- <input type=file name=GRD_SolicitacaoAtendimentoEspecial$ctl04$AtendimentoEspecialFile id=GRD_SolicitacaoAtendimentoEspecial_AtendimentoEspecialFile_2 style=width:300px value>
- </td>
- <tr style=background-color:White>
- <td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl05$CHK_Gravar type=checkbox id=GRD_SolicitacaoAtendimentoEspecial_CHK_Gravar_3 value=4>
- <td> 4. Leitura de prova (Ledor)<td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl05$TXT_OBS type=text maxlength=250 size=50 id=GRD_SolicitacaoAtendimentoEspecial_TXT_OBS_3 placeholder=Descrição style=width:300px value>
- <td>
- <input type=file name=GRD_SolicitacaoAtendimentoEspecial$ctl05$AtendimentoEspecialFile id=GRD_SolicitacaoAtendimentoEspecial_AtendimentoEspecialFile_3 style=width:300px value>
- </td>
- <tr style=background-color:White>
- <td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl06$CHK_Gravar type=checkbox id=GRD_SolicitacaoAtendimentoEspecial_CHK_Gravar_4 value=5>
- <td> 5. Transcritor de Cartão do Respostas<td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl06$TXT_OBS type=text maxlength=250 size=50 id=GRD_SolicitacaoAtendimentoEspecial_TXT_OBS_4 placeholder=Descrição style=width:300px value>
- <td>
- <input type=file name=GRD_SolicitacaoAtendimentoEspecial$ctl06$AtendimentoEspecialFile id=GRD_SolicitacaoAtendimentoEspecial_AtendimentoEspecialFile_4 style=width:300px value>
- </td>
- <tr style=background-color:White>
- <td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl07$CHK_Gravar type=checkbox id=GRD_SolicitacaoAtendimentoEspecial_CHK_Gravar_5 value=6>
- <td> 6. Intérprete de Libras<td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl07$TXT_OBS type=text maxlength=250 size=50 id=GRD_SolicitacaoAtendimentoEspecial_TXT_OBS_5 placeholder=Descrição style=width:300px value>
- <td>
- <input type=file name=GRD_SolicitacaoAtendimentoEspecial$ctl07$AtendimentoEspecialFile id=GRD_SolicitacaoAtendimentoEspecial_AtendimentoEspecialFile_5 style=width:300px value>
- </td>
- <tr style=background-color:White>
- <td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl08$CHK_Gravar type=checkbox id=GRD_SolicitacaoAtendimentoEspecial_CHK_Gravar_6 value=7>
- <td> 7. Prova em Braile<td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl08$TXT_OBS type=text maxlength=250 size=50 id=GRD_SolicitacaoAtendimentoEspecial_TXT_OBS_6 placeholder=Descrição style=width:300px value>
- <td>
- <input type=file name=GRD_SolicitacaoAtendimentoEspecial$ctl08$AtendimentoEspecialFile id=GRD_SolicitacaoAtendimentoEspecial_AtendimentoEspecialFile_6 style=width:300px value>
- </td>
- <tr style=background-color:White>
- <td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl09$CHK_Gravar type=checkbox id=GRD_SolicitacaoAtendimentoEspecial_CHK_Gravar_7 value=16>
- <td> 9 - Sabadista<td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl09$TXT_OBS type=text maxlength=250 size=50 id=GRD_SolicitacaoAtendimentoEspecial_TXT_OBS_7 placeholder=Descrição style=width:300px value>
- <td>
- <input type=file name=GRD_SolicitacaoAtendimentoEspecial$ctl09$AtendimentoEspecialFile id=GRD_SolicitacaoAtendimentoEspecial_AtendimentoEspecialFile_7 style=width:300px value>
- </td>
- <tr style=background-color:White>
- <td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl10$CHK_Gravar type=checkbox id=GRD_SolicitacaoAtendimentoEspecial_CHK_Gravar_8 value=8>
- <td>Outra condição (descreva)<td>
- <input name=GRD_SolicitacaoAtendimentoEspecial$ctl10$TXT_OBS type=text maxlength=250 size=50 id=GRD_SolicitacaoAtendimentoEspecial_TXT_OBS_8 placeholder=Descrição style=width:300px value>
- <td>
- <input type=file name=GRD_SolicitacaoAtendimentoEspecial$ctl10$AtendimentoEspecialFile id=GRD_SolicitacaoAtendimentoEspecial_AtendimentoEspecialFile_8 style=width:300px value>
- </td>
- </tr>
- </table>
- </fieldset>
  
 </div>
  </td>
