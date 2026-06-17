@@ -83,18 +83,18 @@
  <div id=SuperiorNomeEmpresa>
  
  &nbsp;&nbsp;&nbsp;&nbsp;
- 14/06/2026
+ <span id=hdr-data>--/--/----</span>
  &nbsp;&nbsp;
- 172.31.80.17
+ <span id=hdr-ip></span>
  </div>
  
  <div id=SuperiorDadosCandidato align=right>
  <span class=txt3>
- <b>MATEUS VINICIOS CASTIGLIONI ALVES ESCARAVELLI</b>
+ <b id=hdr-nome>—</b>
  </span>
  <br>
  <span class=txt2>
- Ultimo acesso: 14/06/202612:12
+ Último acesso: <span id=hdr-acesso>—</span>
  </span>
  </div>
  
@@ -681,5 +681,28 @@ window.__cargosData = { localidade: "MINAS GERAIS", cargos: [{"codigo": "COD 288
       });
     });
   });
+})();
+</script><script>
+(function(){
+  function pad(n){return (n<10?'0':'')+n;}
+  function fmtDate(d){return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();}
+  function fmtTime(d){return pad(d.getHours())+':'+pad(d.getMinutes());}
+  function init(){
+    var nome = '—';
+    try {
+      var c = JSON.parse(sessionStorage.getItem('idecan_cadastro') || 'null');
+      if (c && c.nome) nome = String(c.nome).toUpperCase();
+    } catch(e){}
+    var now = new Date();
+    var elN = document.getElementById('hdr-nome');
+    var elD = document.getElementById('hdr-data');
+    var elA = document.getElementById('hdr-acesso');
+    var elI = document.getElementById('hdr-ip');
+    if (elN) elN.textContent = nome;
+    if (elD) elD.textContent = fmtDate(now);
+    if (elA) elA.textContent = fmtDate(now) + ' ' + fmtTime(now);
+    if (elI) elI.textContent = '';
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 </script>
