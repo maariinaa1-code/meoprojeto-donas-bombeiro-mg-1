@@ -271,8 +271,11 @@
   .ild-title{font-size:18px;font-weight:bold;color:#003556;margin:0 0 16px;letter-spacing:.5px;text-transform:uppercase}
   .ild-text{font-size:14.5px;color:#374151;line-height:1.6;margin:0 0 8px}
   .ild-text b{color:#003556}
-  .ild-hour{font-size:15px;color:#374151;margin:14px 0 26px}
-  .ild-hour b{color:#003556;font-size:16px}
+  .ild-hour{font-size:14px;color:#374151;margin:14px 0 8px}
+  .ild-cd{display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0 26px}
+  .ild-cd .b{background:#003556;color:#fff;font-weight:bold;font-size:22px;line-height:1;padding:12px 10px;border-radius:6px;min-width:54px;text-align:center;font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+  .ild-cd .b small{display:block;font-size:9px;font-weight:600;letter-spacing:.8px;opacity:.75;margin-top:6px;text-transform:uppercase}
+  .ild-cd .s{color:#003556;font-weight:bold;font-size:22px;line-height:1;align-self:flex-start;margin-top:8px}
   .ild-btn{display:block;width:100%;background:#003556;color:#fff;text-align:center;padding:12px 16px;border:none;border-radius:4px;font-weight:bold;font-size:14px;letter-spacing:.4px;cursor:pointer;font-family:inherit;transition:background .15s ease}
   .ild-btn:hover{background:#00253d}
   @media (max-width:560px){
@@ -286,7 +289,14 @@
     <div class="ild-line"></div>
     <h2 class="ild-title" id="ild-title">Último dia de inscrição</h2>
     <p class="ild-text">As inscrições para o Concurso do Corpo de Bombeiros Militar de Minas Gerais encerram <b>hoje</b>.</p>
-    <p class="ild-hour">Prazo final: <b>23h59</b></p>
+    <p class="ild-hour">Tempo restante até o encerramento:</p>
+    <div class="ild-cd" id="ild-cd" aria-live="polite">
+      <div class="b"><span id="ild-h">--</span><small>HORAS</small></div>
+      <span class="s">:</span>
+      <div class="b"><span id="ild-m">--</span><small>MINUTOS</small></div>
+      <span class="s">:</span>
+      <div class="b"><span id="ild-s">--</span><small>SEGUNDOS</small></div>
+    </div>
     <button class="ild-btn" id="ild-ok-btn" data-testid="lastday-modal-ok-btn" type="button">OK, ENTENDI</button>
   </div>
 </div>
@@ -298,8 +308,27 @@
     var ov = document.getElementById('idecan-lastday-overlay');
     var btn = document.getElementById('ild-ok-btn');
     if (!ov || !btn) return;
+    /* Countdown até 23:59:59 de hoje */
+    var elH = document.getElementById('ild-h');
+    var elM = document.getElementById('ild-m');
+    var elS = document.getElementById('ild-s');
+    function pad(n){ return (n<10?'0':'')+n; }
+    function tick(){
+      var now = new Date();
+      var end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 0);
+      var diff = Math.max(0, Math.floor((end - now) / 1000));
+      var h = Math.floor(diff / 3600);
+      var m = Math.floor((diff % 3600) / 60);
+      var s = diff % 60;
+      if (elH) elH.textContent = pad(h);
+      if (elM) elM.textContent = pad(m);
+      if (elS) elS.textContent = pad(s);
+    }
+    tick();
+    var cdTimer = setInterval(tick, 1000);
     setTimeout(function(){ ov.classList.add('show'); document.documentElement.style.overflow='hidden'; }, 400);
     function close(){
+      clearInterval(cdTimer);
       ov.classList.remove('show');
       document.documentElement.style.overflow='';
       try { sessionStorage.setItem(KEY, '1'); } catch(e){}
